@@ -10,15 +10,19 @@ from signals.settings import ASSETS_DIR
 app = Flask('signals')
 
 
-RE_NOT_LETTER = re.compile(r'[^A-Z]+')
+RE_NOT_LETTER = re.compile(r'[^A-Za-z0-9!@#$]+')
 
 
 def get_flag_images():
-    for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-        filename = os.path.join(ASSETS_DIR, 'flags', '{}.png'.format(letter))
+    flags = []
+    flags.extend((x, x) for x in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    flags.extend([('!', 'R1'), ('@', 'R2'), ('#', 'R3'), ('$', 'R4')])
+
+    for tl, fl in flags:
+        filename = os.path.join(ASSETS_DIR, 'flags', '{}.png'.format(fl))
         img = Image.open(filename)
         img = img.resize((FLAG_WIDTH, FLAG_HEIGHT))
-        yield letter, img
+        yield tl, img
 
 FLAG_WIDTH = FLAG_HEIGHT = 100
 FLAGS_IMAGES = dict(get_flag_images())  # pre-cache
@@ -66,14 +70,14 @@ def nautical_flags(text):
     img_width = (PADDING + FLAG_WIDTH) * len(rows[0]) + PADDING
     img_height = (PADDING + FLAG_HEIGHT) * len(rows) + PADDING
 
-    img = Image.new('RGB', (img_width, img_height), color=BACKGROUND)
+    img = Image.new('RGBA', (img_width, img_height), color=BACKGROUND)
     hoff = voff = PADDING
 
     for row in rows:
         for letter in row:
             letter_img = FLAGS_IMAGES.get(letter)
             if letter_img:
-                img.paste(letter_img, (hoff, voff))
+                img.paste(letter_img, box=(hoff, voff), mask=letter_img)
             hoff += FLAG_WIDTH + PADDING
         hoff = PADDING
         voff += FLAG_HEIGHT + PADDING
