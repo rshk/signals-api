@@ -20,19 +20,19 @@ Customize row size: ``?row_size=20``
 ![](https://signals-api.herokuapp.com/flags/hello%20world?row_size=20)
 
 
-### All the flags on display
+### All the flags on display ###
 
 Letters:
 
-![](https://signals-api.herokuapp.com/flags/ABCDEFGHIJKLMNOPQRSTUVWXYZ?background=ddd&row_size=13)
+![](https://signals-api.herokuapp.com/flags/ABCDEFGHIJKLMNOPQRSTUVWXYZ?background=ccc&row_size=13)
 
 Digits:
 
-![](https://signals-api.herokuapp.com/flags/0123456789?background=ddd&row_size=5)
+![](https://signals-api.herokuapp.com/flags/0123456789?background=ccc&row_size=5)
 
 Repeater flags: ``!@#$`` (keep in mind that ``#`` needs to be specified as ``%23`` in URLs)
 
-![](https://signals-api.herokuapp.com/flags/!@%23$?background=ddd)
+![](https://signals-api.herokuapp.com/flags/!@%23$?background=ccc)
 
 
 ### License
