@@ -1,6 +1,6 @@
 WGET = wget
-SVG_TARGETS = A.svg B.svg C.svg D.svg E.svg F.svg G.svg H.svg I.svg J.svg K.svg L.svg M.svg N.svg O.svg P.svg Q.svg R.svg S.svg T.svg U.svg V.svg W.svg X.svg Y.svg Z.svg
-PNG_TARGETS = A.png B.png C.png D.png E.png F.png G.png H.png I.png J.png K.png L.png M.png N.png O.png P.png Q.png R.png S.png T.png U.png V.png W.png X.png Y.png Z.png
+SVG_TARGETS = A.svg B.svg C.svg D.svg E.svg F.svg G.svg H.svg I.svg J.svg K.svg L.svg M.svg N.svg O.svg P.svg Q.svg R.svg S.svg T.svg U.svg V.svg W.svg X.svg Y.svg Z.svg 0.svg 1.svg 2.svg 3.svg 4.svg 5.svg 6.svg 7.svg 8.svg 9.svg R1.svg R2.svg R3.svg R4.svg
+PNG_TARGETS = A.png B.png C.png D.png E.png F.png G.png H.png I.png J.png K.png L.png M.png N.png O.png P.png Q.png R.png S.png T.png U.png V.png W.png X.png Y.png Z.png 0.png 1.png 2.png 3.png 4.png 5.png 6.png 7.png 8.png 9.png R1.png R2.png R3.png R4.png
 
 .PHONY: all
 
@@ -87,6 +87,49 @@ Y.svg:
 
 Z.svg:
 	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/c/c6/ICS_Zulu.svg
+
+0.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/a/ac/ICS_Pennant_Zero.svg
+
+1.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/c/c1/ICS_Pennant_One.svg
+
+2.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/c/c0/ICS_Pennant_Two.svg
+
+3.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/6/64/ICS_Pennant_Three.svg
+
+4.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/8/87/ICS_Pennant_Four.svg
+
+5.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/a/ad/ICS_Pennant_Five.svg
+
+6.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/d/da/ICS_Pennant_Six.svg
+
+7.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/b/b8/ICS_Pennant_Seven.svg
+
+8.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/3/30/ICS_Pennant_Eight.svg
+
+9.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/2/2c/ICS_Pennant_Niner.svg
+
+R1.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/6/61/ICS_Repeat_One.svg
+
+R2.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/0/08/ICS_Repeat_Two.svg
+
+R3.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/7/74/ICS_Repeat_Three.svg
+
+R4.svg:
+	$(WGET) -O $@ https://upload.wikimedia.org/wikipedia/commons/b/bd/ICS_Repeat_Four.svg
+
 
 $(PNG_TARGETS): %.png: %.svg
 	inkscape -z -w 200 -e $@ $<
