@@ -22,9 +22,17 @@ Customize row size: ``?row_size=20``
 
 ### All the flags on display
 
-Only letters are supported at the moment. Number and substitute flags coming soon.
+Letters:
 
 ![](https://signals-api.herokuapp.com/flags/ABCDEFGHIJKLMNOPQRSTUVWXYZ?background=ddd&row_size=13)
+
+Digits:
+
+![](https://signals-api.herokuapp.com/flags/0123456789?background=ddd&row_size=5)
+
+Repeater flags: ``!@#$`` (keep in mind that ``#`` needs to be specified as ``%23`` in URLs)
+
+![](https://signals-api.herokuapp.com/flags/!@%23$?background=ddd)
 
 
 ### License
