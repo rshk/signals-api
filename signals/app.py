@@ -6,13 +6,18 @@ import re
 from flask import Flask
 from flask_restful import inputs, reqparse
 from PIL import Image
-from signals.settings import ASSETS_DIR
+from signals.settings import ASSETS_DIR, HTML_DIR
 from werkzeug.exceptions import BadRequest
 
 app = Flask('signals')
 
 
-RE_NOT_LETTER = re.compile(r'[^A-Za-z0-9!@#$]+')
+@app.route('/')
+def index():
+    with open(os.path.join(HTML_DIR, 'index.html')) as fp:
+        data = fp.read()
+        return data.replace(  # HACK
+            'https://signals-api.herokuapp.com/flags/', '/flags/')
 
 
 def json_response(data, code=200, headers=None):
@@ -32,7 +37,7 @@ def handle_bad_request(error):
 def get_flag_images():
     flags = []
     flags.extend((x, x) for x in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
-    flags.extend([('!', 'R1'), ('@', 'R2'), ('#', 'R3'), ('$', 'R4')])
+    flags.extend([('*1', 'R1'), ('*2', 'R2'), ('*3', 'R3'), ('*4', 'R4')])
 
     for tl, fl in flags:
         filename = os.path.join(ASSETS_DIR, 'flags', '{}.png'.format(fl))
@@ -40,7 +45,6 @@ def get_flag_images():
         # img = img.resize((FLAG_WIDTH, FLAG_HEIGHT))
         yield tl, img
 
-# FLAG_WIDTH = FLAG_HEIGHT = 100
 FLAGS_IMAGES = dict(get_flag_images())  # pre-cache
 
 
@@ -52,6 +56,23 @@ def parse_color(s):
     raise ValueError('Color must be three or six hexadecimal digits')
 
 
+RE_TEXT_TOKENS = re.compile(
+    '(?P<LETTER>[0-9A-Za-z])|'
+    '(?P<SPECIAL>\\*[1-4])|'
+    '(?P<SPACE>[ \t\n\r]+)|'
+    '(?P<MISMATCH>.)')
+
+
+def tokenize_text(s):
+    for mo in RE_TEXT_TOKENS.finditer(s):
+        typ = mo.lastgroup
+        val = mo.group(typ)
+        if typ in ('LETTER', 'SPECIAL'):
+            yield val
+        elif typ == 'SPACE':
+            yield ' '
+        else:
+            raise ValueError('Unexpected character: {}'.format(val))
 
 
 @app.route('/flags/<text>')
@@ -75,16 +96,19 @@ def nautical_flags(text):
     if len(text) > TEXT_SIZE_LIMIT:
         raise BadRequest('Text too long')
 
-    text = text.upper()
-    text = RE_NOT_LETTER.sub(' ', text)
-    text = text.strip()
+    text = text.upper().strip()
 
-    def _tokenize(t):
+    try:
+        tokens = list(tokenize_text(text))
+    except ValueError as exc:
+        raise BadRequest(str(exc))
+
+    def _group_tokens(t):
         while t:
             yield t[:ROW_SIZE]
             t = t[ROW_SIZE:]
 
-    rows = list(_tokenize(text))
+    rows = list(_group_tokens(tokens))
     if len(rows) == 0:
         raise BadRequest('Text must contain at least one flag')
 

@@ -1,38 +1,48 @@
 # Signals API
 
-Hosted at: https://signals-api.herokuapp.com
+Hosted at: [signals-api.herokuapp.com](https://signals-api.herokuapp.com)
+
+GitHub project: [rshk/signals-api](https://github.com/rshk/signals-api)
 
 
-## Nautical flags API
+## Nautical flags: ``/flags/:text``
 
-``/flags/:text``
-
-![](https://signals-api.herokuapp.com/flags/hello%20world)
+[![](https://signals-api.herokuapp.com/flags/hello%20world?size=50&row_size=12)](https://signals-api.herokuapp.com/flags/hello%20world)
 
 
 Customize background: ``?background=:color``
 
-![](https://signals-api.herokuapp.com/flags/hello?background=00ff00)
+[![](https://signals-api.herokuapp.com/flags/hello?background=00ff00&size=50)](https://signals-api.herokuapp.com/flags/hello?background=00ff00)
 
 
-Customize row size: ``?row_size=20``
+Change row size: ``?row_size=6``
 
-![](https://signals-api.herokuapp.com/flags/hello%20world?row_size=20)
+[![](https://signals-api.herokuapp.com/flags/hello%20world?row_size=6&size=50)](https://signals-api.herokuapp.com/flags/hello%20world?row_size=6)
+
+
+Change padding: ``?padding=2``
+
+[![](https://signals-api.herokuapp.com/flags/hello?padding=2&size=50)](https://signals-api.herokuapp.com/flags/hello?padding=2)
+
+
+Change size: ``?size=80``
+
+[![](https://signals-api.herokuapp.com/flags/hello?size=80)](https://signals-api.herokuapp.com/flags/hello?size=80)
 
 
 ### All the flags on display ###
 
 Letters:
 
-![](https://signals-api.herokuapp.com/flags/ABCDEFGHIJKLMNOPQRSTUVWXYZ?background=ccc&row_size=13)
+[![](https://signals-api.herokuapp.com/flags/ABCDEFGHIJKLMNOPQRSTUVWXYZ?row_size=13&size=50)](https://signals-api.herokuapp.com/flags/ABCDEFGHIJKLMNOPQRSTUVWXYZ?row_size=13)
 
 Digits:
 
-![](https://signals-api.herokuapp.com/flags/0123456789?background=ccc&row_size=5)
+[![](https://signals-api.herokuapp.com/flags/0123456789?row_size=10&size=50)](https://signals-api.herokuapp.com/flags/0123456789?row_size=10)
 
-Repeater flags: ``!@#$`` (keep in mind that ``#`` needs to be specified as ``%23`` in URLs)
+Repeater flags: ``*1`` to ``*4``
 
-![](https://signals-api.herokuapp.com/flags/!@%23$?background=ccc)
+[![](https://signals-api.herokuapp.com/flags/*1*2*3*4?size=50)](https://signals-api.herokuapp.com/flags/*1*2*3*4)
 
 
 ### License
