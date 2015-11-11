@@ -132,4 +132,4 @@ R4.svg:
 
 
 $(PNG_TARGETS): %.png: %.svg
-	inkscape -z -w 200 -e $@ $<
+	inkscape -z -w 100 -h 100 -e $@ $<
