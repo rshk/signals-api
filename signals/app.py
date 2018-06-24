@@ -3,10 +3,10 @@ import json
 import os
 import re
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import inputs, reqparse
 from PIL import Image
-from signals.settings import ASSETS_DIR, HTML_DIR
+from signals.settings import ASSETS_DIR
 from werkzeug.exceptions import BadRequest
 
 app = Flask('signals')
@@ -14,10 +14,7 @@ app = Flask('signals')
 
 @app.route('/')
 def index():
-    with open(os.path.join(HTML_DIR, 'index.html')) as fp:
-        data = fp.read()
-        return data.replace(  # HACK
-            'https://signals-api.herokuapp.com/flags/', '/flags/')
+    return render_template('index.html')
 
 
 def json_response(data, code=200, headers=None):
