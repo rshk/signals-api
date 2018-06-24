@@ -45,6 +45,7 @@ def get_flag_images():
         # img = img.resize((FLAG_WIDTH, FLAG_HEIGHT))
         yield tl, img
 
+
 FLAGS_IMAGES = dict(get_flag_images())  # pre-cache
 
 
@@ -81,8 +82,8 @@ def nautical_flags(text):
 
     parser = reqparse.RequestParser()
     parser.add_argument('row_size', type=inputs.positive, default=10)
-    parser.add_argument('size', type=inputs.int_range(10, 100), default=100)
-    parser.add_argument('padding', type=inputs.int_range(0, 50), default=10)
+    parser.add_argument('size', type=inputs.int_range(10, 1000), default=100)
+    parser.add_argument('padding', type=inputs.int_range(0, 100), default=10)
     parser.add_argument('background', type=parse_color,
                         default=(0xC8, 0xD0, 0xD4))
 
@@ -123,8 +124,12 @@ def nautical_flags(text):
             letter_img = FLAGS_IMAGES.get(letter)
 
             if letter_img:
-                scaled = letter_img.resize((FLAG_WIDTH, FLAG_HEIGHT))
-                img.paste(scaled, box=(hoff, voff), mask=scaled)
+                scaled = fit_image_to_box(
+                    letter_img, (FLAG_WIDTH, FLAG_HEIGHT))
+                box_h_off = int((FLAG_WIDTH - scaled.width) / 2)
+                box_v_off = int((FLAG_HEIGHT - scaled.height) / 2)
+                img.paste(scaled, box=(hoff + box_h_off, voff + box_v_off),
+                          mask=scaled)
 
             hoff += FLAG_WIDTH + PADDING
         hoff = PADDING
@@ -134,3 +139,17 @@ def nautical_flags(text):
     img.save(output, 'png')
 
     return output.getvalue(), 200, {'content-type': 'image/png'}
+
+
+def fit_image_to_box(image, size):
+
+    width, height = size
+
+    w_scale = width / image.width
+    h_scale = height / image.height
+    min_scale = min(w_scale, h_scale)
+
+    new_size = (int(min_scale * image.width),
+                int(min_scale * image.height))
+
+    return image.resize(new_size, Image.ANTIALIAS)
