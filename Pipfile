@@ -4,10 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-gunicorn = "==19.3.0"
-Flask-RESTful = "==0.3.4"
-Flask = "==0.10.1"
-Pillow = "==3.0.0"
+gunicorn = "*"
+Flask-RESTful = "*"
+Flask = ">=1.0"
+Pillow = ">=3.1.1"
 
 [dev-packages]
 
