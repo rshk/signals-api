@@ -3,7 +3,7 @@ import json
 import os
 import re
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_restful import inputs, reqparse
 from PIL import Image
 from signals.settings import ASSETS_DIR
@@ -14,7 +14,7 @@ app = Flask('signals')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', domain=request.host)
 
 
 def json_response(data, code=200, headers=None):
@@ -57,7 +57,7 @@ def parse_color(s):
 RE_TEXT_TOKENS = re.compile(
     '(?P<LETTER>[0-9A-Za-z])|'
     '(?P<SPECIAL>\\*[1-4])|'
-    '(?P<SPACE>[ \t\n\r]+)|'
+    '(?P<SPACE>[ \t\n\r])|'
     '(?P<MISMATCH>.)')
 
 

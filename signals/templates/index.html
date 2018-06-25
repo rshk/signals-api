@@ -1,3 +1,4 @@
+{*- -*- mode: web -*- engine: jinja2 -*- -*}
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +16,7 @@
     <body>
         <div class="container">
             <h1 id="signals-api">Signals API</h1>
-            <p>Hosted at: <a href="https://signals-api.herokuapp.com">signals-api.herokuapp.com</a></p>
+            <p>Hosted at: <a href="https://{{ domain }}">{{ domain }}</a></p>
             <p>GitHub project: <a href="https://github.com/rshk/signals-api">rshk/signals-api</a></p>
             <h2 id="nautical-flags-flagstext">Nautical flags: <code>/flags/:text</code></h2>
             <p><a href="/flags/hello%20world"><img src="/flags/hello%20world?size=50&amp;row_size=12" /></a></p>
