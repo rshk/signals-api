@@ -135,7 +135,12 @@ def nautical_flags(text):
     output = io.BytesIO()
     img.save(output, 'png')
 
-    return output.getvalue(), 200, {'content-type': 'image/png'}
+    headers = {
+        'Content-Type': 'image/png',
+        'Cache-Control': 'max-age=86400',  # One day
+    }
+
+    return output.getvalue(), 200, headers
 
 
 def fit_image_to_box(image, size):
